@@ -52,9 +52,18 @@ namespace TodoMVC.Web.Controllers
         public ActionResult Complete(int TodoId)
         {
             TodoList todoList = db.TodoList.Find(TodoId);
-            todoList.Completed = true;
+            if (todoList.Completed)
+            {
+                todoList.Completed = false;
+            }
+            else
+            {
+                todoList.Completed = true;
+            }
+
             db.SaveChanges();
-            return RedirectToAction("List");
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult Delete(int TodoId)
@@ -62,7 +71,7 @@ namespace TodoMVC.Web.Controllers
             TodoList todoList = db.TodoList.Find(TodoId);
             todoList.Deleted = true;
             db.SaveChanges();
-            return RedirectToAction("List");
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
     }
