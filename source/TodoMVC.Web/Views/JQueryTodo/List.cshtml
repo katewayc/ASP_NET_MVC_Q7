@@ -1,0 +1,148 @@
+﻿@model IEnumerable<TodoMVC.Web.Models.TodoList>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Todo......</h2>
+<div class="float-right">
+    <a href="#" id="btnListAll" class="btn btn-info" role="button">All</a>  <a href="#" id="btnListActive" class="btn btn-info" role="button">Active</a>  <a href="#" id="btnListCompleted" class="btn btn-info" role="button">Completed</a>
+</div>
+<br />
+<br />
+<form method="post" id="FormTodoList">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <input type="text" id="InputTodoWhat" class="form-control" name="InputTodoWhat" id="InputTodoWhat" placeholder="Add one thing todo..." value="">
+            </div>
+        </div>
+    </div>
+</form>
+<br />
+<table class="table" id="tableMain"></table>
+
+
+@section scripts{
+    <link href="~/Content/table-strike.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var completed = "";
+            getList(completed);
+        });
+
+        function getList(completed) {
+            var getListAllUrl = "/JQueryTodo/GetList";
+            $.ajax({
+                url: getListAllUrl,
+                data: { "Completed": completed },
+                type: 'get',
+                cache: false,
+                async: false,
+                datatype: 'json',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    $('#tableMain').empty();
+                    $('#tableMain').removeClass();
+                    $('#tableMain').addClass("table " + completed);
+                    if (data.length > 0) {
+                        $.each(data, function (i, item) {
+                            $('#tableMain').append('<tr id="tr' + item.TodoId + '"><td class="btnCheck"><a href="#" class="btn btn-primary btn-sm " role="button"> V </a></td><td> ' + item.TodoWhat + ' </td><td><a href="#" class="btn btn-secondary btn-sm btnDelete" role="button"> X </a></td></tr>')
+                            if (item.Completed) {
+                                $('#tr' + item.TodoId + '').addClass("strikeout");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        $("#InputTodoWhat").keydown(function (event) {
+            if (event.which == 13) {
+                createTask();
+            }
+        });
+
+        $("#btnListAll").click(function () {
+            getList();
+        });
+
+        $("#btnListActive").click(function () {
+            getList(false);
+        });
+
+        $("#btnListCompleted").click(function () {
+            getList(true);
+        });
+
+        $(document).ready(function () {
+            $(document).on("click", "td[class='btnCheck']", function () {
+                let checkId = $(this).closest("tr").attr("id");
+                checkId = checkId.replace('tr', '');
+                let isActive = $(this).closest("table").attr("class");
+                isActive = isActive.replace('table', '');
+                checkTask(checkId, isActive);
+            });
+        });
+
+        $(document).ready(function () {
+            $(document).on("click", ".btnDelete", function () {
+                let deleteId = $(this).closest("tr").attr("id");
+                deleteId = deleteId.replace('tr', '');
+                let isActive = $(this).closest("table").attr("class");
+                isActive = isActive.replace('table', '');
+                deleteTask(deleteId, isActive);
+            });
+        });
+
+        function checkTask(checkId, isActive) {
+            var createTaskUrl = "/JQueryTodo/CheckTask";
+            $.ajax({
+                url: createTaskUrl,
+                data: { "TodoId": checkId },
+                type: 'post',
+                cache: false,
+                async: false,
+                datatype: 'json',
+                success: function (data) {
+                    getList(isActive);
+                }
+            });
+        }
+
+        function deleteTask(deleteId, isActive) {
+            var createTaskUrl = "/JQueryTodo/DeleteTask";
+            $.ajax({
+                url: createTaskUrl,
+                data: { "TodoId": deleteId },
+                type: 'post',
+                cache: false,
+                async: false,
+                datatype: 'json',
+                success: function (data) {
+                    getList(isActive);
+                }
+            });
+        }
+
+        function createTask() {
+            var taskTodo = $('#InputTodoWhat').val();
+            var createTaskUrl = "/JQueryTodo/CreateTask";
+            $.ajax({
+                url: createTaskUrl,
+                data: { "TaskTodo": taskTodo },
+                type: 'post',
+                cache: false,
+                async: false,
+                datatype: 'json',
+                success: function (data) {
+                    getList();
+                }
+            });
+        }
+
+    </script>
+
+}
