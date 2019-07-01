@@ -1,5 +1,5 @@
 ﻿@{
-                ViewBag.Title = "List";
+    ViewBag.Title = "List";
 }
 
 <h2>Todo......</h2>
@@ -64,6 +64,9 @@
         $("#InputTodoWhat").keydown(function (event) {
             if (event.which == 13) {
                 createTask();
+                 //return false;
+               event.preventDefault();
+                //event.stopPropagation();
             }
         });
 
