@@ -6,7 +6,7 @@
 
 <h2>Todo......</h2>
 <div class="float-right">
-    @Html.ActionLink("All", "List", null, new { @class = "btn btn-info" }) | @Html.ActionLink("Active", "ActiveTodoList", null, new { @class = "btn btn-info" }) | @Html.ActionLink("Completed", "CompletedList", null, new { @class = "btn btn-info" })
+    @Html.ActionLink("All", "List", null, new { Deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Active", "List", null, new { Completed = "false", Deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Completed", "List", null, new { Completed = "true", Deleted = "false" }, new { @class = "btn btn-info" })
 </div>
 <br />
 <br />

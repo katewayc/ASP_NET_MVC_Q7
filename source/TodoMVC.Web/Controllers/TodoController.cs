@@ -7,45 +7,38 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TodoMVC.Web.Models;
+using TodoMVC.Web.Repository;
+using TodoMVC.Web.Service;
 
 namespace TodoMVC.Web.Controllers
 {
     public class TodoController : Controller
     {
         private TrainingEntities db = new TrainingEntities();
+        private ITodoListRepository todoListRepository;
+        private TodoListService todoListService;
 
-        public ActionResult List()
+        public TodoController()
         {
-            var todoList = db.TodoList.Where(b => b.Deleted == false).ToList();
+            this.todoListRepository = new TodoListRepository();
+            this.todoListService = new TodoListService();
+        }
+
+        public ActionResult List(bool? Completed = null, bool Deleted = false)
+        {
+            IEnumerable<TodoList> todoList = todoListService.GetTodoList(Completed, Deleted);
 
             return View(todoList);
-        }
-
-        public ActionResult ActiveTodoList()
-        {
-            var todoList = db.TodoList.Where(b => b.Deleted == false & b.Completed == false).ToList();
-
-            return View("List", todoList);
-        }
-
-        public ActionResult CompletedList()
-        {
-            var todoList = db.TodoList.Where(b => b.Deleted == false & b.Completed == true).ToList();
-
-            return View("List", todoList);
         }
 
         [HttpPost]
         public ActionResult Create(FormCollection post)
         {
-            TodoList todoList = new TodoList();
-            todoList.TodoWhat = post["InputTodoWhat"].ToString();
-            if (todoList.TodoWhat != "")
+            if (!string.IsNullOrEmpty(post["InputTodoWhat"]))
             {
-                db.TodoList.Add(todoList);
-                db.SaveChanges();
+                todoListService.CreateTask(post["InputTodoWhat"] as string);
             }
-            
+
             return RedirectToAction("List");
         }
 
