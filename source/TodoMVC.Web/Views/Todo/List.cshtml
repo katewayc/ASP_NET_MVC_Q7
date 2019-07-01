@@ -30,7 +30,7 @@
             {
                 <tr class="strikeout">
                     <td>
-                        @Html.ActionLink("V", "Complete", new { TodoId = item.TodoId })
+                        @Html.ActionLink("V", "Check", new { TodoId = item.TodoId, Completed = !item.Completed })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TodoWhat)
@@ -44,7 +44,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink("V", "Complete", new { TodoId = item.TodoId })
+                        @Html.ActionLink("V", "Check", new { TodoId = item.TodoId, Completed = !item.Completed })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TodoWhat)

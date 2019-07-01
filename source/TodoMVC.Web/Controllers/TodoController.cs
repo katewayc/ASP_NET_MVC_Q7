@@ -42,28 +42,17 @@ namespace TodoMVC.Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult Complete(int TodoId)
+        public ActionResult Check(int TodoId, bool Completed)
         {
-            TodoList todoList = db.TodoList.Find(TodoId);
-            if (todoList.Completed)
-            {
-                todoList.Completed = false;
-            }
-            else
-            {
-                todoList.Completed = true;
-            }
-
-            db.SaveChanges();
+            todoListService.UpdateTaskCheckStatus(TodoId, Completed);
 
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult Delete(int TodoId)
         {
-            TodoList todoList = db.TodoList.Find(TodoId);
-            todoList.Deleted = true;
-            db.SaveChanges();
+            todoListService.UpdateTaskAsDeleted(TodoId);
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 

@@ -38,10 +38,25 @@ namespace TodoMVC.Web.Service
 
         public bool CreateTask(string TodoWhat)
         {
-            TodoList task = new TodoList();
-            task.TodoWhat = TodoWhat;
-            this.todoListRepository.Create(task);
+            if (TodoWhat.Trim() != "")
+            {
+                TodoList task = new TodoList();
+                task.TodoWhat = TodoWhat;
+                this.todoListRepository.Create(task);
+            }
 
+            return false;
+        }
+
+        public bool UpdateTaskCheckStatus(int TodoId, bool Completed)
+        {
+            this.todoListRepository.UpdateCompleted(TodoId, Completed);
+            return false;
+        }
+
+        public bool UpdateTaskAsDeleted(int TodoId)
+        {
+            this.todoListRepository.UpdateDeleted(TodoId, true);
             return false;
         }
     }
