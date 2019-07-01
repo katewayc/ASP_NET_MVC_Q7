@@ -63,7 +63,7 @@ namespace TodoMVC.Web.Controllers
                 todoList.Completed = true;
             }
             db.SaveChanges();
-            return Redirect(Request.UrlReferrer.ToString());
+            return Json("");
         }
 
         public ActionResult DeleteTask(int TodoId)
@@ -71,7 +71,7 @@ namespace TodoMVC.Web.Controllers
             TodoList todoList = db.TodoList.Find(TodoId);
             todoList.Deleted = true;
             db.SaveChanges();
-            return Redirect(Request.UrlReferrer.ToString());
+            return Json("");
         }
     }
 }
