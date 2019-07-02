@@ -15,7 +15,7 @@ namespace TodoMVC.Web.Services
         {
             this.todoListRepository = new TodoListRepository();
         }
-        public IEnumerable<TodoList> GetTodoList(bool? Completed, bool Deleted)
+        public IEnumerable<TodoList> GetTodoList(bool? completed, bool deleted)
         {
             /*
                         > get all / get active/ get completed
@@ -24,39 +24,39 @@ namespace TodoMVC.Web.Services
 
             IEnumerable<TodoList> todoList = null;
 
-            if (Completed != null)
+            if (completed != null)
             {
-                todoList = this.todoListRepository.GetAllbyDeletedCompleted(Deleted, (bool)Completed).OrderByDescending(b => b.TodoId);
+                todoList = this.todoListRepository.GetAllbyDeletedCompleted(deleted, (bool)completed).OrderByDescending(b => b.TodoId);
             }
             else
             {
-                todoList = this.todoListRepository.GetAllbyDeleted(Deleted).OrderByDescending(b => b.TodoId);
+                todoList = this.todoListRepository.GetAllbyDeleted(deleted).OrderByDescending(b => b.TodoId);
             }
 
             return todoList;
         }
 
-        public bool CreateTask(string TodoWhat)
+        public bool CreateTask(string todoWhat)
         {
-            if (TodoWhat.Trim() != "")
+            if (todoWhat.Trim() != "")
             {
                 TodoList task = new TodoList();
-                task.TodoWhat = TodoWhat;
+                task.TodoWhat = todoWhat;
                 this.todoListRepository.Create(task);
             }
 
             return false;
         }
 
-        public bool UpdateTaskCheckStatus(int TodoId, bool Completed)
+        public bool UpdateTaskCheckStatus(int todoId, bool completed)
         {
-            this.todoListRepository.UpdateCompleted(TodoId, Completed);
+            this.todoListRepository.UpdateCompleted(todoId, completed);
             return false;
         }
 
-        public bool UpdateTaskAsDeleted(int TodoId)
+        public bool UpdateTaskAsDeleted(int todoId)
         {
-            this.todoListRepository.UpdateDeleted(TodoId, true);
+            this.todoListRepository.UpdateDeleted(todoId, true);
             return false;
         }
     }

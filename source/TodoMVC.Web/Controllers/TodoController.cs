@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TodoMVC.Web.Models;
-using TodoMVC.Web.Repository;
 using TodoMVC.Web.Services;
 
 namespace TodoMVC.Web.Controllers

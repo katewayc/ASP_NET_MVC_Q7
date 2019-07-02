@@ -26,7 +26,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
+        $(function () {
             var completed = "";
             getList(completed);
         });
@@ -35,10 +35,8 @@
             var getListAllUrl = "/JQueryTodo/GetList";
             $.ajax({
                 url: getListAllUrl,
-                data: { "Completed": completed },
-                type: 'get',
-                cache: false,
-                async: false,
+                data: { "completed": completed },
+                type: 'post',
                 datatype: 'json',
                 success: function (data) {
                     data = JSON.parse(data);
@@ -47,9 +45,9 @@
                     $('#tableMain').addClass("table " + completed);
                     if (data.length > 0) {
                         $.each(data, function (i, item) {
-                            $('#tableMain').append('<tr id="tr' + item.TodoId + '"><td class="btnCheck"><a href="#" class="btn btn-outline-primary btn-sm " role="button"> V </a></td><td> ' + item.TodoWhat + ' </td><td><a href="#" class="btn btn-secondary btn-sm btnDelete" role="button"> X </a></td></tr>')
-                            if (item.Completed) {
-                                var mockCheckboxTr = $('#tr' + item.TodoId + '');
+                            $('#tableMain').append('<tr id="tr' + item.todoId + '"><td class="btnCheck"><a href="#" class="btn btn-outline-primary btn-sm " role="button" data-check-to-be="' + !item.completed + '"> V </a></td><td> ' + item.todoWhat + ' </td><td><a href="#" class="btn btn-secondary btn-sm btnDelete" role="button"> X </a></td></tr>')
+                            if (item.completed) {
+                                var mockCheckboxTr = $('#tr' + item.todoId + '');
                                 mockCheckboxTr.addClass("strikeout");
                                 var mockCheckboxLink = mockCheckboxTr.find("td:first").find('a');
                                 mockCheckboxLink.removeClass();
@@ -64,8 +62,8 @@
         $("#InputTodoWhat").keydown(function (event) {
             if (event.which == 13) {
                 createTask();
-                 //return false;
-               event.preventDefault();
+                return false;
+                //event.preventDefault();
                 //event.stopPropagation();
             }
         });
@@ -82,34 +80,29 @@
             getList(true);
         });
 
-        $(document).ready(function () {
-            $(document).on("click", "td[class='btnCheck']", function () {
-                let checkId = $(this).closest("tr").attr("id");
-                checkId = checkId.replace('tr', '');
-                let isActive = $(this).closest("table").attr("class");
-                isActive = isActive.replace('table', '');
-                checkTask(checkId, isActive);
-            });
+        $(document).on("click", "td[class='btnCheck']", function () {
+            let checkId = $(this).closest("tr").attr("id");
+            checkId = checkId.replace('tr', '');
+            let isActive = $(this).closest("table").attr("class");
+            isActive = isActive.replace('table', '');
+            let checkToBe = $(this).find("a").data("check-to-be");
+            checkTask(checkId, checkToBe, isActive);
         });
 
-        $(document).ready(function () {
-            $(document).on("click", ".btnDelete", function () {
-                let deleteId = $(this).closest("tr").attr("id");
-                deleteId = deleteId.replace('tr', '');
-                let isActive = $(this).closest("table").attr("class");
-                isActive = isActive.replace('table', '');
-                deleteTask(deleteId, isActive);
-            });
+        $(document).on("click", ".btnDelete", function () {
+            let deleteId = $(this).closest("tr").attr("id");
+            deleteId = deleteId.replace('tr', '');
+            let isActive = $(this).closest("table").attr("class");
+            isActive = isActive.replace('table', '');
+            deleteTask(deleteId, isActive);
         });
 
-        function checkTask(checkId, isActive) {
+        function checkTask(checkId, checkToBe, isActive) {
             var createTaskUrl = "/JQueryTodo/CheckTask";
             $.ajax({
                 url: createTaskUrl,
-                data: { "TodoId": checkId },
+                data: { "todoId": checkId, "checkToBe": checkToBe },
                 type: 'post',
-                cache: false,
-                async: false,
                 datatype: 'json',
                 success: function (data) {
                     getList(isActive);
@@ -121,10 +114,8 @@
             var createTaskUrl = "/JQueryTodo/DeleteTask";
             $.ajax({
                 url: createTaskUrl,
-                data: { "TodoId": deleteId },
+                data: { "todoId": deleteId },
                 type: 'post',
-                cache: false,
-                async: false,
                 datatype: 'json',
                 success: function (data) {
                     getList(isActive);
@@ -137,10 +128,8 @@
             var createTaskUrl = "/JQueryTodo/CreateTask";
             $.ajax({
                 url: createTaskUrl,
-                data: { "TaskTodo": taskTodo },
+                data: { "taskTodo": taskTodo },
                 type: 'post',
-                cache: false,
-                async: false,
                 datatype: 'json',
                 success: function (data) {
                     getList();

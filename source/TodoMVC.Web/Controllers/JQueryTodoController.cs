@@ -1,76 +1,63 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TodoMVC.Web.Models;
+using TodoMVC.Web.Services;
 
 namespace TodoMVC.Web.Controllers
 {
     public class JQueryTodoController : Controller
     {
-        private TrainingEntities db = new TrainingEntities();
+        private TodoListService todoListServices;
+
+        public JQueryTodoController()
+        {
+            todoListServices = new TodoListService();
+        }
 
         public ActionResult List()
         {
             return View();
         }
 
-        public JsonResult GetList(bool? Completed)
+        [HttpPost]
+        public JsonResult GetList(bool? completed = null, bool deleted = false)
         {
-            var todoList = db.TodoList.Where(b => b.Deleted == false).ToList().OrderByDescending(b => b.TodoId);
-
-            if (Completed!=null)
+            var setting = new JsonSerializerSettings
             {
-                todoList = db.TodoList.Where(b => b.Deleted == false & b.Completed == Completed).ToList().OrderByDescending(b => b.TodoId);
-            }
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
+            };
 
-            string jsonStr = "";
+            IEnumerable<TodoList> todoList = todoListServices.GetTodoList(completed, deleted);
 
-            jsonStr = JsonConvert.SerializeObject(todoList);
+            var json = JsonConvert.SerializeObject(todoList, Formatting.None, setting);
 
-            return Json(jsonStr, JsonRequestBehavior.AllowGet);
+            return Json(json);
         }
 
         [HttpPost]
-        public JsonResult CreateTask(string TaskTodo)
+        public JsonResult CreateTask(string taskTodo)
         {
-            TodoList todoList = new TodoList();
-            todoList.TodoWhat = TaskTodo;
-            if (todoList.TodoWhat != "")
+            if (!string.IsNullOrEmpty(taskTodo))
             {
-                db.TodoList.Add(todoList);
-                db.SaveChanges();
+                todoListServices.CreateTask(taskTodo);
             }
-
-            string jsonStr = "";
-
-            jsonStr = JsonConvert.SerializeObject(todoList);
-
-            return Json(jsonStr, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult CheckTask(int TodoId)
-        {
-            TodoList todoList = db.TodoList.Find(TodoId);
-            if (todoList.Completed)
-            {
-                todoList.Completed = false;
-            }
-            else
-            {
-                todoList.Completed = true;
-            }
-            db.SaveChanges();
             return Json("");
         }
 
-        public ActionResult DeleteTask(int TodoId)
+        [HttpPost]
+        public ActionResult CheckTask(int todoId, bool checkToBe)
         {
-            TodoList todoList = db.TodoList.Find(TodoId);
-            todoList.Deleted = true;
-            db.SaveChanges();
+            todoListServices.UpdateTaskCheckStatus(todoId, checkToBe);
+            return Json("");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTask(int todoId)
+        {
+            todoListServices.UpdateTaskAsDeleted(todoId);
             return Json("");
         }
     }

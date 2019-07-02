@@ -22,25 +22,24 @@ namespace TodoMVC.Web.Repository
             this.db = new TrainingEntities();
         }
 
-        public void Delete(int TodoId)
+        public void Delete(int todoId)
         {
-            TodoList todoList = db.TodoList.Find(TodoId);
+            TodoList todoList = db.TodoList.Find(todoId);
             todoList.Deleted = true;
             this.SaveChanges();
         }
 
-        public void UpdateCompleted(int TodoId, bool Completed)
+        public void UpdateCompleted(int todoId, bool completed)
         {
             using (var context = new TrainingEntities())
             {
                 string sql = "UPDATE TodoList SET Completed = @Completed Where TodoId = @TodoId";
 
-                var todoId = (new SqlParameter("@TodoId", TodoId));
-                var completed = (new SqlParameter("@Completed", Completed));
+                var p_todoId = (new SqlParameter("@TodoId", todoId));
+                var p_completed = (new SqlParameter("@Completed", completed));
 
-                var result = context.Database.ExecuteSqlCommand(sql, todoId, completed);
+                var result = context.Database.ExecuteSqlCommand(sql, p_todoId, p_completed);
             }
-
         }
 
         public IEnumerable<TodoList> GetAllbyDeleted(bool deleted)
@@ -58,16 +57,16 @@ namespace TodoMVC.Web.Repository
             return this.GetAll().Where(where.Compile());
         }
 
-        public void UpdateDeleted(int TodoId, bool Deleted)
+        public void UpdateDeleted(int todoId, bool deleted)
         {
             using (var context = new TrainingEntities())
             {
                 string sql = "UPDATE TodoList SET Deleted = @Deleted Where TodoId = @TodoId";
 
-                var todoId = (new SqlParameter("@TodoId", TodoId));
-                var deleted = (new SqlParameter("@Deleted", Deleted));
+                var p_todoId = (new SqlParameter("@TodoId", todoId));
+                var p_deleted = (new SqlParameter("@Deleted", deleted));
 
-                var result = context.Database.ExecuteSqlCommand(sql, todoId, deleted);
+                var result = context.Database.ExecuteSqlCommand(sql, p_todoId, p_deleted);
             }
         }
     }
