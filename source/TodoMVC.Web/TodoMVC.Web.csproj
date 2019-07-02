@@ -219,7 +219,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ITodoListRepository.cs" />
     <Compile Include="Repository\TodoListRepository.cs" />
-    <Compile Include="Service\TodoListService.cs" />
+    <Compile Include="Services\TodoListService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

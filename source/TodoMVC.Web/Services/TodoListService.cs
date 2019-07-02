@@ -5,7 +5,7 @@ using System.Web;
 using TodoMVC.Web.Models;
 using TodoMVC.Web.Repository;
 
-namespace TodoMVC.Web.Service
+namespace TodoMVC.Web.Services
 {
     public class TodoListService
     {

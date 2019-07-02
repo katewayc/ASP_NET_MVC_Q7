@@ -8,19 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using TodoMVC.Web.Models;
 using TodoMVC.Web.Repository;
-using TodoMVC.Web.Service;
+using TodoMVC.Web.Services;
 
 namespace TodoMVC.Web.Controllers
 {
     public class TodoController : Controller
     {
-        private TrainingEntities db = new TrainingEntities();
-        private ITodoListRepository todoListRepository;
         private TodoListService todoListService;
 
         public TodoController()
         {
-            this.todoListRepository = new TodoListRepository();
             this.todoListService = new TodoListService();
         }
 
