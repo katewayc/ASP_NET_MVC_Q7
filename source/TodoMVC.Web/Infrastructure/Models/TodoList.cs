@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TodoMVC.Web.Models
+namespace TodoMVC.Web.Infrastructure.Models
 {
     using System;
     using System.Collections.Generic;

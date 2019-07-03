@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using TodoMVC.Web.Models;
-using TodoMVC.Web.Services;
+//using TodoMVC.Web.Models;
+//using TodoMVC.Web.Services;
+using TodoMVC.Web.Infrastructure.Models;
+using TodoMVC.Web.Infrastructure.Service;
 
 namespace TodoMVC.Web.Controllers
 {
@@ -48,16 +50,16 @@ namespace TodoMVC.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckTask(int todoId, bool checkToBe)
+        public ActionResult CheckTask(int todoId, bool doneOrNot)
         {
-            todoListService.UpdateTaskCheckStatus(todoId, checkToBe);
+            todoListService.CheckTask(todoId, doneOrNot);
             return Json("");
         }
 
         [HttpPost]
         public ActionResult DeleteTask(int todoId)
         {
-            todoListService.UpdateTaskAsDeleted(todoId);
+            todoListService.DeleteTask(todoId);
             return Json("");
         }
     }

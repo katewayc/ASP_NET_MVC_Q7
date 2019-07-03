@@ -101,7 +101,7 @@
             var createTaskUrl = "/JQueryTodo/CheckTask";
             $.ajax({
                 url: createTaskUrl,
-                data: { "todoId": checkId, "checkToBe": checkToBe },
+                data: { "todoId": checkId, "doneOrNot": checkToBe },
                 type: 'post',
                 datatype: 'json',
                 success: function (data) {

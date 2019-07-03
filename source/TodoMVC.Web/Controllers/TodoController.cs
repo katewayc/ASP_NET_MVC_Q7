@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TodoMVC.Web.Models;
-using TodoMVC.Web.Services;
+//using TodoMVC.Web.Models;
+//using TodoMVC.Web.Services;
+using TodoMVC.Web.Infrastructure.Models;
+using TodoMVC.Web.Infrastructure.Service;
 
 namespace TodoMVC.Web.Controllers
 {
@@ -35,16 +37,16 @@ namespace TodoMVC.Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult Check(int TodoId, bool Completed)
+        public ActionResult Check(int TodoId, bool doneOrNot)
         {
-            todoListService.UpdateTaskCheckStatus(TodoId, Completed);
+            todoListService.CheckTask(TodoId, doneOrNot);
 
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult Delete(int TodoId)
         {
-            todoListService.UpdateTaskAsDeleted(TodoId);
+            todoListService.DeleteTask(TodoId);
 
             return Redirect(Request.UrlReferrer.ToString());
         }

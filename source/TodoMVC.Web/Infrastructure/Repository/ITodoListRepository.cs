@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TodoMVC.Web.Models;
+using TodoMVC.Web.Infrastructure.Models;
 
-namespace TodoMVC.Web.Repository
+namespace TodoMVC.Web.Infrastructure.Repository
 {
-    public interface ITodoListRepository : IRepository<TodoList>
+    interface ITodoListRepository : IRepository<TodoList>
     {
-        void UpdateCompleted(int todoId, bool completed);
+        bool Delete(int todoId);
 
-        void UpdateDeleted(int todoId, bool deleted);
-
-        void Delete(int todoId);
+        bool UpdateCompleted(int todoId, bool doneOrNot);
 
         IEnumerable<TodoList> GetAllbyDeleted(bool deleted);
 

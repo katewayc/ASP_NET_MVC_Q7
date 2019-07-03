@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace TodoMVC.Web.Services
+namespace TodoMVC.Web.Infrastructure.Service
 {
     interface ITodoListService<T>
-        where T : class
+        where T:class
     {
         IEnumerable<T> GetTodoList(bool? completed, bool deleted);
 
         bool CreateTask(string todoWhat);
 
-        bool UpdateTaskCheckStatus(int todoId, bool completed);
+        bool CheckTask(int todoId, bool doneOrNot);
 
-        bool UpdateTaskAsDeleted(int todoId);
+        bool DeleteTask(int todoId);
     }
 }

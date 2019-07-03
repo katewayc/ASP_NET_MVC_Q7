@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TrainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TrainingTodoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TodoList">
           <Key>
             <PropertyRef Name="TodoId" />
@@ -14,14 +14,14 @@
           <Property Name="Completed" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TrainingModelStoreContainer">
+        <EntityContainer Name="TrainingTodoModelStoreContainer">
           <EntitySet Name="TodoList" EntityType="Self.TodoList" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TrainingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TrainingTodoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="TodoList">
           <Key>
             <PropertyRef Name="TodoId" />
@@ -31,7 +31,7 @@
           <Property Name="Completed" Type="Boolean" Nullable="false" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TrainingEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TrainingTodoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TodoList" EntityType="Self.TodoList" />
         </EntityContainer>
       </Schema>
@@ -39,9 +39,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TrainingModelStoreContainer" CdmEntityContainer="TrainingEntities">
+        <EntityContainerMapping StorageEntityContainer="TrainingTodoModelStoreContainer" CdmEntityContainer="TrainingTodoEntities">
           <EntitySetMapping Name="TodoList">
-            <EntityTypeMapping TypeName="TrainingModel.TodoList">
+            <EntityTypeMapping TypeName="TrainingTodoModel.TodoList">
               <MappingFragment StoreEntitySet="TodoList">
                 <ScalarProperty Name="TodoId" ColumnName="TodoId" />
                 <ScalarProperty Name="TodoWhat" ColumnName="TodoWhat" />

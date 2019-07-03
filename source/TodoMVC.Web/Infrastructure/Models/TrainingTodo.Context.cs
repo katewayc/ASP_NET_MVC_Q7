@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TodoMVC.Web.Models
+namespace TodoMVC.Web.Infrastructure.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TrainingEntities : DbContext
+    public partial class TrainingTodoEntities : DbContext
     {
-        public TrainingEntities()
-            : base("name=TrainingEntities")
+        public TrainingTodoEntities()
+            : base("name=TrainingTodoEntities")
         {
         }
     
