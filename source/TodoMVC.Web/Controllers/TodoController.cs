@@ -19,9 +19,9 @@ namespace TodoMVC.Web.Controllers
             this.todoListService = new TodoListService();
         }
 
-        public ActionResult List(bool? Completed = null, bool Deleted = false)
+        public ActionResult List(bool? completed = null, bool deleted = false)
         {
-            IEnumerable<TodoList> todoList = todoListService.GetTodoList(Completed, Deleted);
+            IEnumerable<TodoList> todoList = todoListService.GetTodoList(completed, deleted);
 
             return View(todoList);
         }
@@ -37,16 +37,16 @@ namespace TodoMVC.Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult Check(int TodoId, bool doneOrNot)
+        public ActionResult Check(int todoId, bool doneOrNot)
         {
-            todoListService.CheckTask(TodoId, doneOrNot);
+            todoListService.CheckTask(todoId, doneOrNot);
 
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        public ActionResult Delete(int TodoId)
+        public ActionResult Delete(int todoId)
         {
-            todoListService.DeleteTask(TodoId);
+            todoListService.DeleteTask(todoId);
 
             return Redirect(Request.UrlReferrer.ToString());
         }

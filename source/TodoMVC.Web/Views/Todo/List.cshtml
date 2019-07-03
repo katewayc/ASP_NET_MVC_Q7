@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TodoMVC.Web.Models.TodoList>
+﻿@model IEnumerable<TodoMVC.Web.Infrastructure.Models.TodoList>
 
 @{
     ViewBag.Title = "Todo List";
@@ -6,7 +6,7 @@
 
 <h2>Todo......</h2>
 <div class="float-right">
-    @Html.ActionLink("All", "List", null, new { Deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Active", "List", null, new { Completed = "false", Deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Completed", "List", null, new { Completed = "true", Deleted = "false" }, new { @class = "btn btn-info" })
+    @Html.ActionLink("All", "List", null, new { deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Active", "List", null, new { completed = "false", deleted = "false" }, new { @class = "btn btn-info" }) | @Html.ActionLink("Completed", "List", null, new { completed = "true", deleted = "false" }, new { @class = "btn btn-info" })
 </div>
 <br />
 <br />
@@ -30,13 +30,13 @@
             {
                 <tr class="strikeout">
                     <td>
-                        @Html.ActionLink("V", "Check", new { TodoId = item.TodoId, Completed = !item.Completed })
+                        @Html.ActionLink("V", "Check", new { todoId = item.TodoId, doneOrNot = !item.Completed })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TodoWhat)
                     </td>
                     <td>
-                        @Html.ActionLink("X", "Delete", new { TodoId = item.TodoId })
+                        @Html.ActionLink("X", "Delete", new { todoId = item.TodoId })
                     </td>
                 </tr>
             }
@@ -44,13 +44,13 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink("V", "Check", new { TodoId = item.TodoId, Completed = !item.Completed })
+                        @Html.ActionLink("V", "Check", new { todoId = item.TodoId, doneOrNot = !item.Completed })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TodoWhat)
                     </td>
                     <td>
-                        @Html.ActionLink("X", "Delete", new { TodoId = item.TodoId })
+                        @Html.ActionLink("X", "Delete", new { todoId = item.TodoId })
                     </td>
                     <td></td>
                 </tr>
