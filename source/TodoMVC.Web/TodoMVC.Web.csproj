@@ -219,6 +219,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ITodoListRepository.cs" />
     <Compile Include="Repository\TodoListRepository.cs" />
+    <Compile Include="Services\ITodoListService.cs" />
     <Compile Include="Services\TodoListService.cs" />
   </ItemGroup>
   <ItemGroup>

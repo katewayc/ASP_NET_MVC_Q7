@@ -10,11 +10,11 @@ namespace TodoMVC.Web.Controllers
 {
     public class JQueryTodoController : Controller
     {
-        private TodoListService todoListServices;
+        private ITodoListService<TodoList> todoListService;
 
         public JQueryTodoController()
         {
-            todoListServices = new TodoListService();
+            todoListService = new TodoListService();
         }
 
         public ActionResult List()
@@ -23,26 +23,26 @@ namespace TodoMVC.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetList(bool? completed = null, bool deleted = false)
+        public ActionResult GetList(bool? completed = null, bool deleted = false)
         {
-            var setting = new JsonSerializerSettings
+            IEnumerable<TodoList> todoList = todoListService.GetTodoList(completed, deleted);
+
+            var settingsForCamelCasePropertyNames = new JsonSerializerSettings
             {
                 ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
             };
 
-            IEnumerable<TodoList> todoList = todoListServices.GetTodoList(completed, deleted);
-
-            var json = JsonConvert.SerializeObject(todoList, Formatting.None, setting);
+            var json = JsonConvert.SerializeObject(todoList, Formatting.None, settingsForCamelCasePropertyNames);
 
             return Json(json);
         }
 
         [HttpPost]
-        public JsonResult CreateTask(string taskTodo)
+        public ActionResult CreateTask(string taskTodo)
         {
             if (!string.IsNullOrEmpty(taskTodo))
             {
-                todoListServices.CreateTask(taskTodo);
+                todoListService.CreateTask(taskTodo);
             }
             return Json("");
         }
@@ -50,14 +50,14 @@ namespace TodoMVC.Web.Controllers
         [HttpPost]
         public ActionResult CheckTask(int todoId, bool checkToBe)
         {
-            todoListServices.UpdateTaskCheckStatus(todoId, checkToBe);
+            todoListService.UpdateTaskCheckStatus(todoId, checkToBe);
             return Json("");
         }
 
         [HttpPost]
         public ActionResult DeleteTask(int todoId)
         {
-            todoListServices.UpdateTaskAsDeleted(todoId);
+            todoListService.UpdateTaskAsDeleted(todoId);
             return Json("");
         }
     }

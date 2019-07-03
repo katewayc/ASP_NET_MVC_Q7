@@ -10,7 +10,7 @@ namespace TodoMVC.Web.Controllers
 {
     public class TodoController : Controller
     {
-        private TodoListService todoListService;
+        private ITodoListService<TodoList> todoListService;
 
         public TodoController()
         {

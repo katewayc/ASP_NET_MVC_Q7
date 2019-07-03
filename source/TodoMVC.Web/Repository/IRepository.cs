@@ -11,11 +11,16 @@ namespace TodoMVC.Web.Repository
         where TEntity : class
     {
         void Create(TEntity instance);
+
         void Update(TEntity instance);
+
         void Delete(TEntity instance);
+
         TEntity Get(Expression<Func<TEntity,bool>> predicate);
+
         IEnumerable<TEntity> GetAll();
-    //    IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate);
+        //IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate);
+
         void SaveChanges();
     }
 }

@@ -17,6 +17,7 @@ namespace TodoMVC.Web.Repository
             get;
             set;
         }
+
         public GenericRepository()
             : this(new TrainingEntities())
         {

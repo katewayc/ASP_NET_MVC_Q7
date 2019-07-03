@@ -7,7 +7,7 @@ using TodoMVC.Web.Repository;
 
 namespace TodoMVC.Web.Services
 {
-    public class TodoListService
+    public class TodoListService : ITodoListService<TodoList>
     {
         private ITodoListRepository todoListRepository;
 
