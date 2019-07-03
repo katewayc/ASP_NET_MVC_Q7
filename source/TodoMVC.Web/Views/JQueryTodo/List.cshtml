@@ -70,14 +70,17 @@
 
         $("#btnListAll").click(function () {
             getList();
+            return false;
         });
 
         $("#btnListActive").click(function () {
             getList(false);
+            return false;
         });
 
         $("#btnListCompleted").click(function () {
             getList(true);
+            return false;
         });
 
         $(document).on("click", "td[class='btnCheck']", function () {
@@ -87,6 +90,7 @@
             isActive = isActive.replace('table', '');
             let checkToBe = $(this).find("a").data("check-to-be");
             checkTask(checkId, checkToBe, isActive);
+            return false;
         });
 
         $(document).on("click", ".btnDelete", function () {
@@ -95,6 +99,7 @@
             let isActive = $(this).closest("table").attr("class");
             isActive = isActive.replace('table', '');
             deleteTask(deleteId, isActive);
+            return false;
         });
 
         function checkTask(checkId, checkToBe, isActive) {
