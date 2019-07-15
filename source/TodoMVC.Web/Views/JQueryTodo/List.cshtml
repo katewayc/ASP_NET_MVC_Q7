@@ -1,5 +1,5 @@
 ﻿@{
-                ViewBag.Title = "jQuery Todo List";
+    ViewBag.Title = "jQuery Todo List";
 }
 
 <h2>Todo......</h2>
@@ -7,13 +7,12 @@
     <a href="#" id="btnListAll" class="btn btn-info" role="button">All</a>  <a href="#" id="btnListActive" class="btn btn-info" role="button">Active</a>  <a href="#" id="btnListCompleted" class="btn btn-info" role="button">Completed</a>
 </div>
 <br />
+<hr />
 <br />
 <form method="post" id="FormTodoList">
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <input type="text" id="InputTodoWhat" class="form-control" name="InputTodoWhat" placeholder="Add one thing todo..." value="">
-            </div>
+        <div class="form-inline">
+            <input class="form-control col-10 mr-1" type="text" id="InputTodoWhat" class="form-control" name="InputTodoWhat" placeholder="Add one thing todo..." value=""><a id="btnAdd" href="#" class="col-1 btn btn-light btn" role="button"> Add </a>
         </div>
     </div>
 </form>
@@ -66,6 +65,11 @@
                 //event.preventDefault();
                 //event.stopPropagation();
             }
+        });
+
+        $("#btnAdd").click(function () {
+            createTask();
+            return false;
         });
 
         $("#btnListAll").click(function () {
@@ -137,6 +141,7 @@
                 type: 'post',
                 datatype: 'json',
                 success: function (data) {
+                    $('#InputTodoWhat').val('');
                     getList();
                 }
             });
